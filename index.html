@@ -13,13 +13,15 @@
         }
         svg text {
             font-family: Arial, Helvetica, sans-serif;
-            font-size: 12px;
+            font-size: 10px;
+            letter-spacing: -1px;
             dominant-baseline: central;
             text-anchor: middle;
             fill: #ddd;
         }
         svg text.prime {
-            font-size: 18px;
+            font-size: 15px;
+            font-weight: bold;
             fill: black;
         }
     </style>
@@ -28,7 +30,7 @@
     <svg xmlns="http://www.w3.org/2000/svg" width="2000" height="2000" viewBox="-1000 -1000 2000 2000">
     </svg>
     <script>
-        const sieve = new Array(5000);
+        const sieve = new Array(6000);
         sieve.fill(true);
         sieve[0] = sieve[1] = false;
         for (let i = 2; i < sieve.length; i++) {
@@ -44,7 +46,7 @@
             elt.innerHTML = n.toString();
             if (sieve[n])
                 elt.classList.add('prime');
-            const r = 18 * (Math.sqrt(n) - 1);
+            const r = 14 * (Math.sqrt(n) - 1);
             const angle = 2 * Math.PI * (0.5 * Math.sqrt(n) + 0.375);
             elt.setAttribute('x', 0);
             elt.setAttribute('y', 0);
