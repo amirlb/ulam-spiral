@@ -38,10 +38,23 @@
 
         const svg = document.querySelector('svg');
         for (let n = 1; n < sieve.length; n++) {
+            if (sieve[n])
+                continue;
             const elt = document.createElementNS('http://www.w3.org/2000/svg', 'text');
             elt.innerHTML = n.toString();
-            if (sieve[n])
-                elt.classList.add('prime');
+            const r = 14 * (Math.sqrt(n) - 1);
+            const angle = 2 * Math.PI * (0.5 * Math.sqrt(n) + 0.375);
+            elt.setAttribute('x', 0);
+            elt.setAttribute('y', 0);
+            elt.setAttribute('transform', `translate(${r * Math.cos(angle)}, ${-r * Math.sin(angle)}) rotate(${90 - angle * 180 / Math.PI})`);
+            svg.appendChild(elt);
+        }
+        for (let n = 1; n < sieve.length; n++) {
+            if (!sieve[n])
+                continue;
+            const elt = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+            elt.innerHTML = n.toString();
+            elt.classList.add('prime');
             const r = 14 * (Math.sqrt(n) - 1);
             const angle = 2 * Math.PI * (0.5 * Math.sqrt(n) + 0.375);
             elt.setAttribute('x', 0);
