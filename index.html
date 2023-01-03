@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Ulam spiral</title>
+    <style>
+        body {
+            margin: 0;
+            overflow: hidden;
+        }
+        svg {
+            translate: calc(50vw - 1000px) calc(50vh - 1000px);
+        }
+        svg text {
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 12px;
+            dominant-baseline: central;
+            text-anchor: middle;
+            fill: #ddd;
+        }
+        svg text.prime {
+            font-size: 18px;
+            fill: black;
+        }
+    </style>
+</head>
+<body>
+    <svg xmlns="http://www.w3.org/2000/svg" width="2000" height="2000" viewBox="-1000 -1000 2000 2000">
+    </svg>
+    <script>
+        const sieve = new Array(5000);
+        sieve.fill(true);
+        sieve[0] = sieve[1] = false;
+        for (let i = 2; i < sieve.length; i++) {
+            if (sieve[i]) {
+                for (let k = i * i; k < sieve.length; k += i)
+                    sieve[k] = false;
+            }
+        }
+
+        const svg = document.querySelector('svg');
+        for (let n = 1; n < sieve.length; n++) {
+            const elt = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+            elt.innerHTML = n.toString();
+            if (sieve[n])
+                elt.classList.add('prime');
+            const r = 18 * (Math.sqrt(n) - 1);
+            const angle = 2 * Math.PI * (0.5 * Math.sqrt(n) + 0.375);
+            elt.setAttribute('x', 0);
+            elt.setAttribute('y', 0);
+            elt.setAttribute('transform', `translate(${r * Math.cos(angle)}, ${-r * Math.sin(angle)}) rotate(${90 - angle * 180 / Math.PI})`);
+            svg.appendChild(elt);
+        }
+    </script>
+</body>
+</html>
